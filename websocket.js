@@ -16,12 +16,13 @@ ws.onmessage = function(event) {
 	if (focus < 1) {
 		focus *= 100;
 	}
-	if (focus <= 45) {
-		WebSocketData.startCountdown(20);
-	} else if (focus <= 70) {
-		WebSocketData.startCountdown(10);
+	if (focus <= 20) {
+		WebSocketData.startCountdown(15);
+	} else if (focus <= 35) {
+		WebSocketData.startCountdown(5);
 	}
 }
+
 
 ws.onclose = function() {
 	console.log("WebSocket connection closed")
