@@ -294,86 +294,91 @@ function Tetris()
 	};
 
 	this.oneHandler = function() {
-		console.log("hello");
-		console.log(self.area)
-		console.log(self.puzzle);
-		var childrenWithClass = self.area.el.querySelectorAll(".choice1");
-		childrenWithClass.forEach(function(child) {
-			console.log(child)
-			if (child.id == "rightChoice") {
-				WebSocketData.rightChoice += 0.25;
-			} else {
-				WebSocketData.wrongChoice += 0.25;
-			}
-			const classArray = child.className.split(" ");
-			child.className = classArray[classArray.length - 1];
-			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
-			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
-			console.log(child.style);
-			console.log(row, column)
-			self.area.board[row][column] = child;
-		});
+		if (!WebSocketData.isFocusMode) {
+			console.log("hello");
+			console.log(self.area)
+			console.log(self.puzzle);
+			var childrenWithClass = self.area.el.querySelectorAll(".choice1");
+			childrenWithClass.forEach(function(child) {
+				console.log(child)
+				if (child.id == "rightChoice") {
+					WebSocketData.rightChoice += 0.25;
+				} else {
+					WebSocketData.wrongChoice += 0.25;
+				}
+				const classArray = child.className.split(" ");
+				child.className = classArray[classArray.length - 1];
+				const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
+				const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
+				console.log(child.style);
+				console.log(row, column)
+				self.area.board[row][column] = child;
+			});
 
-		console.log(self.puzzle);
-		self.puzzle.elements.forEach(function(element) {
-			element.remove();
-		})
-		self.puzzle.stopped = true;
-		var lines = self.puzzle.area.removeFullLines();
-		if (lines) {
-			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
-			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
-			WebSocketData.currentNumLines += lines;
+			console.log(self.puzzle);
+			self.puzzle.elements.forEach(function(element) {
+				element.remove();
+			})
+			self.puzzle.stopped = true;
+			var lines = self.puzzle.area.removeFullLines();
+			if (lines) {
+				self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
+				self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+				WebSocketData.currentNumLines += lines;
+			}
+			self.puzzle.reset();
+			if (self.puzzle.mayPlace()) {
+				self.puzzle.place();
+			} else {
+				self.puzzle.tetris.gameOver();
+			}
+			console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
+			console.log(WebSocketData.currentNumLines);
 		}
-		self.puzzle.reset();
-		if (self.puzzle.mayPlace()) {
-			self.puzzle.place();
-		} else {
-			self.puzzle.tetris.gameOver();
-		}
-		console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
-		console.log(WebSocketData.currentNumLines);
+		
 	}
 
 	this.twoHandler = function() {
-		console.log("hello2");
-		console.log("hello");
-		console.log(self.area)
-		var childrenWithClass = self.area.el.querySelectorAll(".choice2");
-		childrenWithClass.forEach(function(child) {
-			console.log(child)
-			const classArray = child.className.split(" ");
-			child.className = classArray[classArray.length - 1];
-			if (child.id == "rightChoice") {
-				WebSocketData.rightChoice += 0.25;
-			} else {
-				WebSocketData.wrongChoice += 0.25;
-			}
-			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
-			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
-			console.log(child.style);
-			console.log(row, column)
-			self.area.board[row][column] = child;
-		});
-		console.log(self.puzzle);
-		self.puzzle.elements.forEach(function(element) {
+		if (!WebSocketData.isFocusMode) {
+			console.log("hello2");
+			console.log("hello");
+			console.log(self.area)
+			var childrenWithClass = self.area.el.querySelectorAll(".choice2");
+			childrenWithClass.forEach(function(child) {
+				console.log(child)
+				const classArray = child.className.split(" ");
+				child.className = classArray[classArray.length - 1];
+				if (child.id == "rightChoice") {
+					WebSocketData.rightChoice += 0.25;
+				} else {
+					WebSocketData.wrongChoice += 0.25;
+				}
+				const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
+				const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
+				console.log(child.style);
+				console.log(row, column)
+				self.area.board[row][column] = child;
+			});
+			console.log(self.puzzle);
+			self.puzzle.elements.forEach(function(element) {
 			element.remove();
-		})
-		self.puzzle.stopped = true;
-		var lines = self.puzzle.area.removeFullLines();
-		if (lines) {
-			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
-			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
-			WebSocketData.currentNumLines += lines;
+			})
+			self.puzzle.stopped = true;
+			var lines = self.puzzle.area.removeFullLines();
+			if (lines) {
+				self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
+				self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+				WebSocketData.currentNumLines += lines;
+			}
+			self.puzzle.reset();
+			if (self.puzzle.mayPlace()) {
+				self.puzzle.place();
+			} else {
+				self.puzzle.tetris.gameOver();
+			}
+			console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
+			console.log(WebSocketData.currentNumLines);
 		}
-		self.puzzle.reset();
-		if (self.puzzle.mayPlace()) {
-			self.puzzle.place();
-		} else {
-			self.puzzle.tetris.gameOver();
-		}
-		console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
-		console.log(WebSocketData.currentNumLines);
 	}
 
 	// this.threeHandler = function() {
@@ -1109,7 +1114,7 @@ function Tetris()
 				const choices = ["choice1", "choice2", "choice3"];
 				const rightWrong = ["rightChoice", "wrongChoice", "wrongChoice"];
 				var randomInt = Math.floor(Math.random() * 2);
-				
+
 				for (let k = 0; k < bestMoves.length-1; k++) {
 					if (bestMoves[k] != null) {
 						for (let i = 0; i < bestMoves[k].dimension; i++) {
