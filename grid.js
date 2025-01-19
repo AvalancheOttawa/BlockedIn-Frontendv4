@@ -2,7 +2,6 @@ function Grid(arg1, arg2) {
     if (Array.isArray(arg1)) {
         // Case 1: When the argument is a grid (2D array)
         var frontGrid = arg1;
-        console.log(frontGrid);
         var rows = 22;
         var columns = 10;
         this.rows = rows;
@@ -24,7 +23,6 @@ function Grid(arg1, arg2) {
         // Case 2: When the arguments are rows and columns
         var rows = 22;
         var columns = 10;
-        console.log("NO");
         this.rows = rows;
         this.columns = columns;
 

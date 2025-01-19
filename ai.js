@@ -39,7 +39,6 @@ AI.prototype._best = function(grid, workingPieces, workingPieceIndex){
             }else{
                 score = this._best(_grid, workingPieces, workingPieceIndex + 1).score[0];
             }
-            // console.log(_pieceSet);
 
             if (score > bestScore[0] || bestScore[0] == null){
                 bestScore[0] = score;
@@ -62,8 +61,5 @@ AI.prototype._best = function(grid, workingPieces, workingPieceIndex){
 };
 
 AI.prototype.best = function(grid, workingPieces){
-    var test = this._best(grid, workingPieces, 0);
-    console.log(test);
-    return test.piece;
-    // return this._best(grid, workingPieces, 0).piece;
+    return this._best(grid, workingPieces, 0).piece;
 };

@@ -1,16 +1,7 @@
-function GameManager(){
-    // var aiButton = document.getElementById('ai-button');
+function GameManager() {
     document.addEventListener('keydown', onKeyDown);
 
     var grid = new Grid(22, 10);
-    var rpg = new RandomPieceGenerator();
-    // default
-    // var ai = new AI({
-    //     heightWeight: 0.510066,
-    //     linesWeight: 0.760666,
-    //     holesWeight: 0.35663,
-    //     bumpinessWeight: 0.184483
-    // });
     // best move possible
     var aiBest = new AI({
         heightWeight: 0.510066,
@@ -18,43 +9,25 @@ function GameManager(){
         holesWeight: 0.55663,
         bumpinessWeight: 0.184483
     });
-    var workingPieces = [rpg.nextPiece(), rpg.nextPiece()];
     var workingPiece = null;
     var isAiActive = true;
     var isKeyEnabled = false;
-    // console.log(workingPieces);
 
 
     // Process start of turn
     function startTurn(workingPieces){
-        // Shift working pieces
-        // for(var i = 0; i < workingPieces.length - 1; i++){
-        //     workingPieces[i] = workingPieces[i + 1];
-        // }
-        // workingPieces[workingPieces.length - 1] = rpg.nextPiece();
-        workingPiece = workingPieces[0];
-        console.log(workingPieces)
-
-
         if(isAiActive){
             isKeyEnabled = false;
             const bestMoves = aiBest.best(grid, workingPieces);
-            // startWorkingPieceDropAnimation(function(){
-            console.log(bestMoves[0])
-            
-                while(bestMoves[0].moveDown(grid)); // Drop working piece
-                // endTurn()
-                console.log(grid)
-                if(!endTurn(bestMoves[0])){
-                    alert('Game Over!--');
-                    return;
-                }
-                // startTurn();
-            // })
+        
+            while(bestMoves[0].moveDown(grid)); // Drop working piece
+            if(!endTurn(bestMoves[0])){
+                alert('Game Over!--');
+                return;
+            }
             return bestMoves;
         }else{
             isKeyEnabled = true;
-            gravityTimer.resetForward(500);
         }
     }
 
@@ -65,7 +38,6 @@ function GameManager(){
         } else {
             workingPieces = [Piece.fromIndex(pieceIndex[0]), Piece.fromIndex(pieceIndex[1])]
         }
-        console.log(frontGrid.board);
         grid = new Grid(frontGrid.board);
         return startTurn(workingPieces);
     }
@@ -121,15 +93,6 @@ function GameManager(){
         }
     }
 
-    // aiButton.onclick = function(){
-    //     workingPieces = [rpg.nextPiece(), rpg.nextPiece()];
-    //     workingPiece = null;
-    //     score = 0;
-    //     isKeyEnabled = true;
-    //     startTurn(workingPieces);
-    // }
-
-    // aiButton.style.backgroundColor = "#e9e9ff";
     this.getBestMoves = getBestMoves;
     // startTurn(workingPieces);
 }

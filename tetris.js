@@ -295,12 +295,8 @@ function Tetris()
 
 	this.oneHandler = function() {
 		if (!WebSocketData.isFocusMode) {
-			console.log("hello");
-			console.log(self.area)
-			console.log(self.puzzle);
 			var childrenWithClass = self.area.el.querySelectorAll(".choice1");
 			childrenWithClass.forEach(function(child) {
-				console.log(child)
 				if (child.id == "rightChoice") {
 					WebSocketData.rightChoice += 0.25;
 				} else {
@@ -310,12 +306,9 @@ function Tetris()
 				child.className = classArray[classArray.length - 1];
 				const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
 				const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
-				console.log(child.style);
-				console.log(row, column)
 				self.area.board[row][column] = child;
 			});
 
-			console.log(self.puzzle);
 			self.puzzle.elements.forEach(function(element) {
 				element.remove();
 			})
@@ -332,20 +325,14 @@ function Tetris()
 			} else {
 				self.puzzle.tetris.gameOver();
 			}
-			console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
-			console.log(WebSocketData.currentNumLines);
 		}
 		
 	}
 
 	this.twoHandler = function() {
 		if (!WebSocketData.isFocusMode) {
-			console.log("hello2");
-			console.log("hello");
-			console.log(self.area)
 			var childrenWithClass = self.area.el.querySelectorAll(".choice2");
 			childrenWithClass.forEach(function(child) {
-				console.log(child)
 				const classArray = child.className.split(" ");
 				child.className = classArray[classArray.length - 1];
 				if (child.id == "rightChoice") {
@@ -355,11 +342,8 @@ function Tetris()
 				}
 				const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
 				const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
-				console.log(child.style);
-				console.log(row, column)
 				self.area.board[row][column] = child;
 			});
-			console.log(self.puzzle);
 			self.puzzle.elements.forEach(function(element) {
 			element.remove();
 			})
@@ -376,8 +360,6 @@ function Tetris()
 			} else {
 				self.puzzle.tetris.gameOver();
 			}
-			console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
-			console.log(WebSocketData.currentNumLines);
 		}
 	}
 
@@ -436,6 +418,8 @@ function Tetris()
 
 	// help
 	document.getElementById("tetris-help-close").onclick = helpwindow.close;
+
+	const focusModeDiv = document.getElementById("focus-mode");
 
 	// highscores
 	// document.getElementById("tetris-menu-highscores").onclick = function()
@@ -1106,11 +1090,8 @@ function Tetris()
 			}
 			// create the ghost block
 			if (!WebSocketData.isFocusMode) {
-				console.log(this.type);
+				focusModeDiv.style.display = 'none';
 				const bestMoves = gameManager.getBestMoves(this.area, [this.type, this.nextType]);
-				console.log(bestMoves);
-				console.log(this.area);
-				console.log(bestMoves[0]);
 				const choices = ["choice1", "choice2", "choice3"];
 				const rightWrong = ["rightChoice", "wrongChoice", "wrongChoice"];
 				var randomInt = Math.floor(Math.random() * 2);
@@ -1132,9 +1113,9 @@ function Tetris()
 						}
 					}
 				}
+			} else {
+				focusModeDiv.style.display = 'block';
 			}
-			
-			
 
 			this.running = true;
 			this.fallDownID = setTimeout(this.fallDown, this.speed);
@@ -1250,7 +1231,6 @@ function Tetris()
 		{
 			if (self.isRunning()) {
 				if (self.mayMoveDown()) {
-					console.log("go down")
 					self.moveDown();
 					self.fallDownID = setTimeout(self.fallDown, self.speed);
 				} else {
