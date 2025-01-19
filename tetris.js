@@ -1100,32 +1100,35 @@ function Tetris()
 				}
 			}
 			// create the ghost block
-			console.log(this.type);
-			const bestMoves = gameManager.getBestMoves(this.area, [this.type, this.nextType]);
-			console.log(bestMoves);
-			console.log(this.area);
-			console.log(bestMoves[0]);
-			const choices = ["choice1", "choice2", "choice3"];
-			const rightWrong = ["rightChoice", "wrongChoice", "wrongChoice"];
-			var randomInt = Math.floor(Math.random() * 2);
-
-			for (let k = 0; k < bestMoves.length-1; k++) {
-				if (bestMoves[k] != null) {
-					for (let i = 0; i < bestMoves[k].dimension; i++) {
-						for (let j = 0; j < bestMoves[k].dimension; j++) {
-							if (bestMoves[k].cells[i][j] != 0) {
-								const className = this.valueToBlock(bestMoves[k].cells[i][j]);
-								var element = document.createElement("div");
-								element.className = choices[(randomInt + k)%2] + " ghost-block " + className;
-								element.id = rightWrong[k];
-								element.style.left = (28 * (bestMoves[k].column + j)) + "px";
-								element.style.top = (28 * (bestMoves[k].row + i)) + "px";
-								this.area.el.appendChild(element);
+			if (!WebSocketData.isFocusMode) {
+				console.log(this.type);
+				const bestMoves = gameManager.getBestMoves(this.area, [this.type, this.nextType]);
+				console.log(bestMoves);
+				console.log(this.area);
+				console.log(bestMoves[0]);
+				const choices = ["choice1", "choice2", "choice3"];
+				const rightWrong = ["rightChoice", "wrongChoice", "wrongChoice"];
+				var randomInt = Math.floor(Math.random() * 2);
+				
+				for (let k = 0; k < bestMoves.length-1; k++) {
+					if (bestMoves[k] != null) {
+						for (let i = 0; i < bestMoves[k].dimension; i++) {
+							for (let j = 0; j < bestMoves[k].dimension; j++) {
+								if (bestMoves[k].cells[i][j] != 0) {
+									const className = this.valueToBlock(bestMoves[k].cells[i][j]);
+									var element = document.createElement("div");
+									element.className = choices[(randomInt + k)%2] + " ghost-block " + className;
+									element.id = rightWrong[k];
+									element.style.left = (28 * (bestMoves[k].column + j)) + "px";
+									element.style.top = (28 * (bestMoves[k].row + i)) + "px";
+									this.area.el.appendChild(element);
+								}
 							}
 						}
 					}
 				}
 			}
+			
 			
 
 			this.running = true;

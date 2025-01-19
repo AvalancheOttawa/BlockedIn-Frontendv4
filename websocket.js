@@ -37,6 +37,12 @@ setInterval(function() {
 	ws.send(JSON.stringify({ "endpoint": "sendLineGrowth", "message": linesPerMin}));
 }, 60000);
 
-// setInterval(function() {
-// 	ws.send("gaze");
-// }, 1000);
+setInterval(function() {
+	const output = ws.send(JSON.stringify({ "endpoint": "getFocus", "message": ""}));
+	const jsonOutput = JSON.parse(output);
+	if (jsonOutput.focus <= 45) {
+		WebSocketData.startCountdown(30);
+	} else if (jsonOutput.focus <= 70) {
+		WebSocketData.startCountdown(15);
+	}
+}, 1000);
