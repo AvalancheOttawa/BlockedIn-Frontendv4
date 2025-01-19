@@ -5,7 +5,7 @@ var ws, playerID, playerList = [];
 ws = new WebSocket(url)
 ws.onopen = function() {
 	console.log("WebSocket connection opened")
-	ws.send("Hello, WebSocket!")
+	// ws.send("Hello, WebSocket!")
 }
 
 ws.onmessage = function(event) {
@@ -25,14 +25,16 @@ ws.onerror = function(event) {
 
 setInterval(function() {
 	const average = WebSocketData.rightChoice / (WebSocketData.rightChoice + WebSocketData.wrongChoice);
-	// ws.send(JSON.stringify({ "endpoint": "sendAccuracy", "message": average}))
+	console.log("AVERAGE BEING SEND: " + average);
+	string = JSON.stringify({ "endpoint": "sendAverage", "message": average});
+	ws.send(string);
 }, 1000);
 
 
 setInterval(function() {
 	const linesPerMin = WebSocketData.currentNumLines - WebSocketData.lastNumLines;
 	WebSocketData.lastNumLines = WebSocketData.currentNumLines;
-	// ws.send(JSON.stringify({ "endpoint": "", "message": linesPerMin}));
+	ws.send(JSON.stringify({ "endpoint": "sendLineGrowth", "message": linesPerMin}));
 }, 60000);
 
 // setInterval(function() {
