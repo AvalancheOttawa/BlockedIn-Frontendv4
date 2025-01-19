@@ -121,8 +121,12 @@
  */
 function Tetris()
 {
+	
+	// ai.best()
 	var self = this;
-
+	const gameManager = new GameManager();
+	
+	
 	this.stats = new Stats();
 	this.puzzle = null;
 	this.area = null;
@@ -305,7 +309,7 @@ function Tetris()
 	document.getElementById("tetris-menu-resume").onclick = function() { self.pause(); this.blur(); };
 
 	// help
-	document.getElementById("tetris-menu-help").onclick = function() { highscores.close(); helpwindow.activate(); this.blur(); };
+	// document.getElementById("tetris-menu-help").onclick = function() { highscores.close(); helpwindow.activate(); this.blur(); };
 	document.getElementById("tetris-help-close").onclick = helpwindow.close;
 
 	// highscores
@@ -783,36 +787,36 @@ function Tetris()
 
 		// width & height must be the same
 		this.puzzles = [
-			[
-				[0,0,1],
-				[1,1,1],
-				[0,0,0]
+			[// O
+				[1,1],
+				[1,1]
 			],
-			[
+			[ // J
 				[1,0,0],
 				[1,1,1],
 				[0,0,0]
 			],
-			[
+			[ // L
+				[0,0,1],
+				[1,1,1],
+				[0,0,0]
+			],
+			[ // Z
+				[1,1,0],
+				[0,1,1],
+				[0,0,0]
+			],
+			[ // S
 				[0,1,1],
 				[1,1,0],
 				[0,0,0]
 			],
-			[
-				[1,1,0],
-				[0,1,1],
-				[0,0,0]
-			],
-			[
+			[ // T
 				[0,1,0],
 				[1,1,1],
 				[0,0,0]
 			],
-			[
-				[1,1],
-				[1,1]
-			],
-			[
+			[ // I
 				[0,0,0,0],
 				[1,1,1,1],
 				[0,0,0,0],
@@ -949,6 +953,10 @@ function Tetris()
 			this.x = areaStartX;
 			this.y = 1;
 			this.board = this.createEmptyPuzzle(puzzle.length, puzzle[0].length);
+			console.log(this.type);
+			const bestMoves = gameManager.getBestMoves(this.area, [this.type]);
+			console.log(bestMoves);
+			console.log(this.area);
 			// create puzzle
 			for (var y = puzzle.length - 1; y >= 0; y--) {
 				for (var x = 0; x < puzzle[y].length; x++) {
