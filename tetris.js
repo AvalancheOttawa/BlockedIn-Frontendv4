@@ -327,6 +327,7 @@ function Tetris()
 				self.puzzle.tetris.gameOver();
 			}
 		} else {
+			this.destroyGhostBlocks();
 			focusModeDiv.style.display = 'block';
 		}
 	}
@@ -364,6 +365,7 @@ function Tetris()
 				self.puzzle.tetris.gameOver();
 			}
 		} else {
+			this.destroyGhostBlocks();
 			focusModeDiv.style.display = 'block';
 		}
 	}

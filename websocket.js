@@ -11,10 +11,14 @@ ws.onopen = function() {
 ws.onmessage = function(event) {
 	console.log(event.data)
 	const jsonOutput = JSON.parse(event.data);
-	console.log(jsonOutput.message.focus);
-	if (jsonOutput.message.focus <= 45) {
+	let focus = jsonOutput.message.focus;
+	console.log(focus);
+	if (focus < 1) {
+		focus *= 100;
+	}
+	if (focus <= 45) {
 		WebSocketData.startCountdown(20);
-	} else if (jsonOutput.message.focus <= 70) {
+	} else if (focus <= 70) {
 		WebSocketData.startCountdown(10);
 	}
 }
