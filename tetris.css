@@ -222,6 +222,18 @@ body, table, input {
 */
 #tetris	.block6	{ background: #FF0000; }
 
+#tetris .ghost-block {
+	opacity: 0.2;
+}
+
+#tetris .choice1 {
+	background: #000dff;
+	opacity: 0.3;
+}
+
+#tetris .choice2 {
+	background: #ff0000;
+}
 
 /*** window	***/
 
