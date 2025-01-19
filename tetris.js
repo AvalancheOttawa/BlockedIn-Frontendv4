@@ -121,8 +121,6 @@
  */
 function Tetris()
 {
-	
-	// ai.best()
 	var self = this;
 	const gameManager = new GameManager();
 	
@@ -146,6 +144,7 @@ function Tetris()
 	{
 		if (self.puzzle && !confirm('Are you sure you want to start a new game ?')) return;
 		self.reset();
+		WebSocketData.resetGame();
 		self.stats.start();
 		document.getElementById("tetris-nextpuzzle").style.display = "block";
 		self.area = new Area(self.unit, self.areaX, self.areaY, "tetris-area");
@@ -301,15 +300,20 @@ function Tetris()
 		var childrenWithClass = self.area.el.querySelectorAll(".choice1");
 		childrenWithClass.forEach(function(child) {
 			console.log(child)
-			const array = child.className.split(" ");
-			child.className = array[array.length - 1];
-
+			if (child.id == "rightChoice") {
+				WebSocketData.rightChoice += 0.25;
+			} else {
+				WebSocketData.wrongChoice += 0.25;
+			}
+			const classArray = child.className.split(" ");
+			child.className = classArray[classArray.length - 1];
 			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
 			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
 			console.log(child.style);
 			console.log(row, column)
 			self.area.board[row][column] = child;
 		});
+
 		console.log(self.puzzle);
 		self.puzzle.elements.forEach(function(element) {
 			element.remove();
@@ -319,6 +323,7 @@ function Tetris()
 		if (lines) {
 			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
 			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+			WebSocketData.currentNumLines += lines;
 		}
 		self.puzzle.reset();
 		if (self.puzzle.mayPlace()) {
@@ -326,7 +331,8 @@ function Tetris()
 		} else {
 			self.puzzle.tetris.gameOver();
 		}
-		
+		console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
+		console.log(WebSocketData.currentNumLines);
 	}
 
 	this.twoHandler = function() {
@@ -336,9 +342,13 @@ function Tetris()
 		var childrenWithClass = self.area.el.querySelectorAll(".choice2");
 		childrenWithClass.forEach(function(child) {
 			console.log(child)
-			const array = child.className.split(" ");
-			child.className = array[array.length - 1];
-
+			const classArray = child.className.split(" ");
+			child.className = classArray[classArray.length - 1];
+			if (child.id == "rightChoice") {
+				WebSocketData.rightChoice += 0.25;
+			} else {
+				WebSocketData.wrongChoice += 0.25;
+			}
 			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
 			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
 			console.log(child.style);
@@ -354,6 +364,7 @@ function Tetris()
 		if (lines) {
 			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
 			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+			WebSocketData.currentNumLines += lines;
 		}
 		self.puzzle.reset();
 		if (self.puzzle.mayPlace()) {
@@ -361,7 +372,50 @@ function Tetris()
 		} else {
 			self.puzzle.tetris.gameOver();
 		}
+		console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
+		console.log(WebSocketData.currentNumLines);
 	}
+
+	// this.threeHandler = function() {
+	// 	console.log("hello3");
+	// 	console.log("hello");
+	// 	console.log(self.area)
+	// 	var childrenWithClass = self.area.el.querySelectorAll(".choice3");
+	// 	childrenWithClass.forEach(function(child) {
+	// 		console.log(child)
+	// 		const classArray = child.className.split(" ");
+	// 		child.className = classArray[classArray.length - 1];
+	// 		if (child.id == "rightChoice") {
+	// 			WebSocketData.rightChoice += 0.25;
+	// 		} else {
+	// 			WebSocketData.wrongChoice += 0.25;
+	// 		}
+	// 		const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
+	// 		const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
+	// 		console.log(child.style);
+	// 		console.log(row, column)
+	// 		self.area.board[row][column] = child;
+	// 	});
+	// 	console.log(self.puzzle);
+	// 	self.puzzle.elements.forEach(function(element) {
+	// 		element.remove();
+	// 	})
+	// 	self.puzzle.stopped = true;
+	// 	var lines = self.puzzle.area.removeFullLines();
+	// 	if (lines) {
+	// 		self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
+	// 		self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+	// 		WebSocketData.currentNumLines += lines;
+	// 	}
+	// 	self.puzzle.reset();
+	// 	if (self.puzzle.mayPlace()) {
+	// 		self.puzzle.place();
+	// 	} else {
+	// 		self.puzzle.tetris.gameOver();
+	// 	}
+	// 	console.log(WebSocketData.rightChoice, WebSocketData.wrongChoice);
+	// 	console.log(WebSocketData.currentNumLines);
+	// }
 
 	// windows
 	var helpwindow = new Window("tetris-help");
@@ -406,6 +460,7 @@ function Tetris()
 	keyboard.set(keyboard.space, this.space);
 	keyboard.set(keyboard.one, this.oneHandler);
 	keyboard.set(keyboard.two, this.twoHandler);
+	keyboard.set(keyboard.three, this.threeHandler);
 
 	document.onkeydown = keyboard.event;
 
@@ -467,6 +522,7 @@ function Tetris()
 		this.escape = 27;
 		this.one = 49;
 		this.two = 50;
+		this.three = 51;
 
 		this.keys = [];
 		this.funcs = [];
@@ -1045,11 +1101,13 @@ function Tetris()
 			}
 			// create the ghost block
 			console.log(this.type);
-			const bestMoves = gameManager.getBestMoves(this.area, [this.type]);
+			const bestMoves = gameManager.getBestMoves(this.area, [this.type, this.nextType]);
 			console.log(bestMoves);
 			console.log(this.area);
 			console.log(bestMoves[0]);
 			const choices = ["choice1", "choice2", "choice3"];
+			const rightWrong = ["rightChoice", "wrongChoice", "wrongChoice"];
+			var randomInt = Math.floor(Math.random() * 2);
 
 			for (let k = 0; k < bestMoves.length-1; k++) {
 				if (bestMoves[k] != null) {
@@ -1058,7 +1116,8 @@ function Tetris()
 							if (bestMoves[k].cells[i][j] != 0) {
 								const className = this.valueToBlock(bestMoves[k].cells[i][j]);
 								var element = document.createElement("div");
-								element.className = choices[k] + " ghost-block " + className;
+								element.className = choices[(randomInt + k)%2] + " ghost-block " + className;
+								element.id = rightWrong[k];
 								element.style.left = (28 * (bestMoves[k].column + j)) + "px";
 								element.style.top = (28 * (bestMoves[k].row + i)) + "px";
 								this.area.el.appendChild(element);
@@ -1077,9 +1136,21 @@ function Tetris()
 				for (var x = 0; x < nextPuzzle[y].length; x++) {
 					if (nextPuzzle[y][x]) {
 						var el = document.createElement("div");
-						el.className = "block" + this.nextType;
-						el.style.left = (x * this.area.unit) + "px";
-						el.style.top = (y * this.area.unit) + "px";
+						el.className = "preview-block" + this.nextType;
+						let offsetX = 0;
+						if (this.nextType == 0) {
+							offsetX = 43;
+						} else if (this.nextType >= 1 && this.nextType <= 5) {
+							offsetX = 29;
+						} else if (this.nextType == 6) {
+							offsetX = 15;
+						}
+						let offsetY = 0;
+						if (this.nextType <= 5) {
+							offsetY = 13;
+						}
+						el.style.left = ((x * this.area.unit) + offsetX) + "px";
+						el.style.top = ((y * this.area.unit) + offsetY) + "px";
 						// el.style.position = "realative";
 						document.getElementById("tetris-nextpuzzle").appendChild(el);
 						this.nextElements.push(el);
@@ -1184,6 +1255,7 @@ function Tetris()
 					if (lines) {
 						self.tetris.stats.setLines(self.tetris.stats.getLines() + lines);
 						self.tetris.stats.setScore(self.tetris.stats.getScore() + (1000 * self.tetris.stats.getLevel() * lines));
+						WebSocketData.currentNumLines += lines;
 					}
 					// reset puzzle
 					self.reset();
@@ -1223,6 +1295,7 @@ function Tetris()
 					if (lines) {
 						self.tetris.stats.setLines(self.tetris.stats.getLines() + lines);
 						self.tetris.stats.setScore(self.tetris.stats.getScore() + (1000 * self.tetris.stats.getLevel() * lines));
+						WebSocketData.currentNumLines += lines;
 					}
 					// reset puzzle
 					self.reset();

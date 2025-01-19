@@ -53,6 +53,20 @@ body, table, input {
 	/* with	margin 0.5px there were	problems with offsetLeft and offsetTop */
 }
 
+#tetris	.preview-block0,
+#tetris	.preview-block1,
+#tetris	.preview-block2,
+#tetris	.preview-block3,
+#tetris	.preview-block4,
+#tetris	.preview-block5,
+#tetris	.preview-block6	{
+	z-index: 1000;
+	position: absolute;
+	width: 26px;
+	height:	26px;
+	border:	0.5px solid #ffffff;
+}
+
 /* #tetris .left h1, #tetris .left h2 {
 	color: #826C55;
 	font-size: 11px;
@@ -69,7 +83,7 @@ body, table, input {
 /* #tetris	.left .menu	{
 	margin-top:	1em;
 
-} */ */
+} */
 /* #tetris	.menu a, #tetris .menu a:visited {
 	display: block;
 	text-decoration: none;
@@ -108,7 +122,7 @@ body, table, input {
 	background:	#ffffff;
 	background-color: rgba(255, 255, 255, 0.5);
 	overflow: visible;
-	display: none;
+	/* display: none; */
 	border: 1px solid white;
 	justify-content: center;
 	align-items: center;
@@ -184,12 +198,14 @@ body, table, input {
 	---
 */
 #tetris	.block1	{ background: #32a4fa; }
+#tetris	.preview-block1	{ background: #32a4fa; }
 
 /*
 	  |
 	---
 */
 #tetris	.block0	{ background: #38C44F; }
+#tetris	.preview-block0	{ background: #38C44F; }
 
 
 
@@ -198,29 +214,34 @@ body, table, input {
    --
 */
 #tetris	.block2	{ background: #FFAC1C; }
+#tetris	.preview-block2	{ background: #FFAC1C; }
 
 /*
 	--
 	 --
 */
 #tetris	.block3	{ background: #FF6600; }
+#tetris	.preview-block3	{ background: #FF6600; }
 
 /*
 	|
    ---
 */
 #tetris	.block4	{ background: #CC54C4; }
+#tetris	.preview-block4	{ background: #CC54C4; }
 
 /*
 	--
 	--
 */
 #tetris	.block5	{ background: #999;	}
+#tetris	.preview-block5	{ background: #999;	}
 
 /*
 	----
 */
 #tetris	.block6	{ background: #FF0000; }
+#tetris	.preview-block6	{ background: #FF0000; }
 
 #tetris .ghost-block {
 	opacity: 0.2;
@@ -233,6 +254,10 @@ body, table, input {
 
 #tetris .choice2 {
 	background: #ff0000;
+}
+
+#tetris .choice3 {
+	background: #00ff04;
 }
 
 /*** window	***/

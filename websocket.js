@@ -21,16 +21,19 @@ ws.onerror = function(event) {
 }
 
 // send me the data in a json format 
-// ws.send(JSON.stringify({ "name": "John", "age": 30 })); 
+// ws.send(JSON.stringify({ "name": "John", "age": 30 }));
 
 setInterval(function() {
-	ws.send("gaze");
+	const average = WebSocketData.rightChoice / (WebSocketData.rightChoice + WebSocketData.wrongChoice);
+	// ws.send(JSON.stringify({ "endpoint": "sendAccuracy", "message": average}))
 }, 1000);
 
 
-// setInterval(function() {
-// 	ws.send("emotion");
-// }, 1000);
+setInterval(function() {
+	const linesPerMin = WebSocketData.currentNumLines - WebSocketData.lastNumLines;
+	WebSocketData.lastNumLines = WebSocketData.currentNumLines;
+	// ws.send(JSON.stringify({ "endpoint": "", "message": linesPerMin}));
+}, 60000);
 
 // setInterval(function() {
 // 	ws.send("gaze");
