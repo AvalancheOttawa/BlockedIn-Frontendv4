@@ -17,9 +17,9 @@ ws.onmessage = function(event) {
 		focus *= 100;
 	}
 	if (focus <= 20) {
-		WebSocketData.startCountdown(15);
-	} else if (focus <= 35) {
-		WebSocketData.startCountdown(5);
+		WebSocketData.startCountdown(17);
+	} else if (focus <= 40) {
+		WebSocketData.startCountdown(7);
 	}
 }
 
@@ -56,4 +56,4 @@ setTimeout(function() {
     setInterval(function() {
         ws.send(JSON.stringify({ "endpoint": "getFocus", "message": "" }));
     }, 3000);
-}, 10000);
+}, 8000);
