@@ -295,6 +295,7 @@ function Tetris()
 
 	this.oneHandler = function() {
 		if (!WebSocketData.isFocusMode) {
+			focusModeDiv.style.display = 'none';
 			var childrenWithClass = self.area.el.querySelectorAll(".choice1");
 			childrenWithClass.forEach(function(child) {
 				if (child.id == "rightChoice") {
@@ -325,12 +326,14 @@ function Tetris()
 			} else {
 				self.puzzle.tetris.gameOver();
 			}
+		} else {
+			focusModeDiv.style.display = 'block';
 		}
-		
 	}
 
 	this.twoHandler = function() {
 		if (!WebSocketData.isFocusMode) {
+			focusModeDiv.style.display = 'none';
 			var childrenWithClass = self.area.el.querySelectorAll(".choice2");
 			childrenWithClass.forEach(function(child) {
 				const classArray = child.className.split(" ");
@@ -360,6 +363,8 @@ function Tetris()
 			} else {
 				self.puzzle.tetris.gameOver();
 			}
+		} else {
+			focusModeDiv.style.display = 'block';
 		}
 	}
 
