@@ -10,6 +10,13 @@ ws.onopen = function() {
 
 ws.onmessage = function(event) {
 	console.log(event.data)
+	const jsonOutput = JSON.parse(event.data);
+	console.log(jsonOutput.message.focus);
+	if (jsonOutput.message.focus <= 45) {
+		WebSocketData.startCountdown(20);
+	} else if (jsonOutput.message.focus <= 70) {
+		WebSocketData.startCountdown(10);
+	}
 }
 
 ws.onclose = function() {
@@ -25,7 +32,7 @@ ws.onerror = function(event) {
 
 setInterval(function() {
 	const average = WebSocketData.rightChoice / (WebSocketData.rightChoice + WebSocketData.wrongChoice);
-	console.log("AVERAGE BEING SEND: " + average);
+	// console.log("AVERAGE BEING SEND: " + average);
 	string = JSON.stringify({ "endpoint": "sendAverage", "message": average});
 	ws.send(string);
 }, 1000);
@@ -35,14 +42,15 @@ setInterval(function() {
 	const linesPerMin = WebSocketData.currentNumLines - WebSocketData.lastNumLines;
 	WebSocketData.lastNumLines = WebSocketData.currentNumLines;
 	ws.send(JSON.stringify({ "endpoint": "sendLineGrowth", "message": linesPerMin}));
-}, 60000);
+}, 50000);
 
 setInterval(function() {
-	const output = ws.send(JSON.stringify({ "endpoint": "getFocus", "message": ""}));
-	const jsonOutput = JSON.parse(output);
-	if (jsonOutput.focus <= 45) {
-		WebSocketData.startCountdown(30);
-	} else if (jsonOutput.focus <= 70) {
-		WebSocketData.startCountdown(15);
-	}
-}, 1000);
+	ws.send(JSON.stringify({ "endpoint": "getFocus", "message": ""}));
+	// console.log(output);
+	// const jsonOutput = JSON.parse(output);
+	// if (jsonOutput.focus <= 45) {
+	// 	WebSocketData.startCountdown(30);
+	// } else if (jsonOutput.focus <= 70) {
+	// 	WebSocketData.startCountdown(15);
+	// }
+}, 2000);
