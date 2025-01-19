@@ -1,5 +1,5 @@
 function GameManager(){
-    var aiButton = document.getElementById('ai-button');
+    // var aiButton = document.getElementById('ai-button');
     document.addEventListener('keydown', onKeyDown);
 
     var grid = new Grid(22, 10);
@@ -121,15 +121,15 @@ function GameManager(){
         }
     }
 
-    aiButton.onclick = function(){
-        workingPieces = [rpg.nextPiece(), rpg.nextPiece()];
-        workingPiece = null;
-        score = 0;
-        isKeyEnabled = true;
-        startTurn(workingPieces);
-    }
+    // aiButton.onclick = function(){
+    //     workingPieces = [rpg.nextPiece(), rpg.nextPiece()];
+    //     workingPiece = null;
+    //     score = 0;
+    //     isKeyEnabled = true;
+    //     startTurn(workingPieces);
+    // }
 
-    aiButton.style.backgroundColor = "#e9e9ff";
+    // aiButton.style.backgroundColor = "#e9e9ff";
     this.getBestMoves = getBestMoves;
     // startTurn(workingPieces);
 }

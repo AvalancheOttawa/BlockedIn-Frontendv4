@@ -171,7 +171,7 @@ function Tetris()
 			self.area.destroy();
 			self.area = null;
 		}
-		document.getElementById("tetris-gameover").style.display = "none";
+		// document.getElementById("tetris-gameover").style.display = "none";
 		document.getElementById("tetris-nextpuzzle").style.display = "none";
 		self.stats.reset();
 		self.paused = false;
@@ -216,7 +216,7 @@ function Tetris()
 		self.stats.stop();
 		self.puzzle.stop();
 		document.getElementById("tetris-nextpuzzle").style.display = "none";
-		document.getElementById("tetris-gameover").style.display = "block";
+		// document.getElementById("tetris-gameover").style.display = "block";etris-gameover
 		if (this.highscores.mayAdd(this.stats.getScore())) {
 			var name = prompt("Game Over !\nEnter your name:", "");
 			if (name && name.trim().length) {
@@ -328,13 +328,13 @@ function Tetris()
 	document.getElementById("tetris-help-close").onclick = helpwindow.close;
 
 	// highscores
-	document.getElementById("tetris-menu-highscores").onclick = function()
-	{
-		helpwindow.close();
-		document.getElementById("tetris-highscores-content").innerHTML = self.highscores.toHtml();
-		highscores.activate();
-		this.blur();
-	};
+	// document.getElementById("tetris-menu-highscores").onclick = function()
+	// {
+	// 	helpwindow.close();
+	// 	document.getElementById("tetris-highscores-content").innerHTML = self.highscores.toHtml();
+	// 	highscores.activate();
+	// 	this.blur();
+	// };
 	document.getElementById("tetris-highscores-close").onclick = highscores.close;
 
 	// keyboard - buttons
@@ -1034,6 +1034,7 @@ function Tetris()
 						el.className = "block" + this.nextType;
 						el.style.left = (x * this.area.unit) + "px";
 						el.style.top = (y * this.area.unit) + "px";
+						// el.style.position = "realative";
 						document.getElementById("tetris-nextpuzzle").appendChild(el);
 						this.nextElements.push(el);
 					}
