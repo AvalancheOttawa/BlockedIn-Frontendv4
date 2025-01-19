@@ -310,13 +310,13 @@ function Tetris()
 	document.getElementById("tetris-help-close").onclick = helpwindow.close;
 
 	// highscores
-	document.getElementById("tetris-menu-highscores").onclick = function()
-	{
-		helpwindow.close();
-		document.getElementById("tetris-highscores-content").innerHTML = self.highscores.toHtml();
-		highscores.activate();
-		this.blur();
-	};
+	// document.getElementById("tetris-menu-highscores").onclick = function()
+	// {
+	// 	helpwindow.close();
+	// 	document.getElementById("tetris-highscores-content").innerHTML = self.highscores.toHtml();
+	// 	highscores.activate();
+	// 	this.blur();
+	// };
 	document.getElementById("tetris-highscores-close").onclick = highscores.close;
 
 	// keyboard - buttons
