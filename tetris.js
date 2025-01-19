@@ -294,6 +294,24 @@ function Tetris()
 		}
 	};
 
+	this.oneHandler = function() {
+		console.log("hello");
+		var childrenWithClass = this.area.el.querySelectorAll(".ghost-block choice1");
+
+		if (childrenWithClass.length > 0) {
+
+		}
+
+		childrenWithClass.forEach(function(child) {
+		    child.remove();  // Removes the child element from the DOM
+		});
+		
+	}
+
+	this.twoHandler = function() {
+		console.log("hello2");
+	}
+
 	// windows
 	var helpwindow = new Window("tetris-help");
 	var highscores = new Window("tetris-highscores");
@@ -335,6 +353,9 @@ function Tetris()
 	keyboard.set(keyboard.left, this.left);
 	keyboard.set(keyboard.right, this.right);
 	keyboard.set(keyboard.space, this.space);
+	keyboard.set(keyboard.one, this.oneHandler);
+	keyboard.set(keyboard.two, this.twoHandler);
+
 	document.onkeydown = keyboard.event;
 
 	/**
@@ -393,6 +414,8 @@ function Tetris()
 		this.space = 32;
 		this.f12 = 123;
 		this.escape = 27;
+		this.one = 49;
+		this.two = 50;
 
 		this.keys = [];
 		this.funcs = [];
@@ -950,10 +973,10 @@ function Tetris()
 			this.x = areaStartX;
 			this.y = 1;
 			this.board = this.createEmptyPuzzle(puzzle.length, puzzle[0].length);
-			console.log(this.type);
-			const bestMoves = gameManager.getBestMoves(this.area, [this.type]);
-			console.log(bestMoves);
-			console.log(this.area);
+			
+			// destroy the ghost blocks before adding the new piece
+			this.destroyGhostBlocks();
+
 			// create puzzle
 			for (var y = puzzle.length - 1; y >= 0; y--) {
 				for (var x = 0; x < puzzle[y].length; x++) {
@@ -975,6 +998,31 @@ function Tetris()
 					lines++;
 				}
 			}
+			// create the ghost block
+			console.log(this.type);
+			const bestMoves = gameManager.getBestMoves(this.area, [this.type]);
+			console.log(bestMoves);
+			console.log(this.area);
+			console.log(bestMoves[0]);
+			const choices = ["choice1", "choice2", "choice3"];
+
+			for (let k = 0; k < bestMoves.length-1; k++) {
+				if (bestMoves[k] != null) {
+					for (let i = 0; i < bestMoves[k].dimension; i++) {
+						for (let j = 0; j < bestMoves[k].dimension; j++) {
+							if (bestMoves[k].cells[i][j] != 0) {
+								const className = this.valueToBlock(bestMoves[k].cells[i][j]);
+								var element = document.createElement("div");
+								element.className = choices[k] + " ghost-block " + className;
+								element.style.left = (28 * (bestMoves[k].column + j)) + "px";
+								element.style.top = (28 * (bestMoves[k].row + i)) + "px";
+								this.area.el.appendChild(element);
+							}
+						}
+					}
+				}
+			}
+
 			this.running = true;
 			this.fallDownID = setTimeout(this.fallDown, this.speed);
 			// next puzzle
@@ -992,6 +1040,44 @@ function Tetris()
 				}
 			}
 		};
+
+		this.valueToBlock = function(code) {
+			let className = "";
+			switch (code) {
+				case 170:
+					className = "block0";
+					break;
+				case 12632256:
+					className = "block1";
+					break;
+				case 11141290:
+					className = "block2";
+					break;
+				case 43690:
+					className = "block3";
+					break;
+				case 43520:
+					className = "block4";
+					break;
+				case 11162880:
+					className = "block5";
+					break;
+				case 11141120:
+					className = "block6";
+					break;
+			}
+			return className;
+		}
+
+		this.destroyGhostBlocks = function() {
+			console.log(this.area.el);
+			var childrenWithClass = this.area.el.querySelectorAll(".ghost-block");
+
+			childrenWithClass.forEach(function(child) {
+			    child.remove();  // Removes the child element from the DOM
+			});
+		}
+		
 
 		/**
 		 * Remove puzzle from the area.
