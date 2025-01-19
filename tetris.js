@@ -148,7 +148,6 @@ function Tetris()
 		self.reset();
 		self.stats.start();
 		document.getElementById("tetris-nextpuzzle").style.display = "block";
-		document.getElementById("tetris-keys").style.display = "none";
 		self.area = new Area(self.unit, self.areaX, self.areaY, "tetris-area");
 		self.puzzle = new Puzzle(self, self.area);
 		if (self.puzzle.mayPlace()) {
@@ -174,7 +173,6 @@ function Tetris()
 		}
 		document.getElementById("tetris-gameover").style.display = "none";
 		document.getElementById("tetris-nextpuzzle").style.display = "none";
-		document.getElementById("tetris-keys").style.display = "block";
 		self.stats.reset();
 		self.paused = false;
 		document.getElementById('tetris-pause').style.display = 'block';
@@ -309,7 +307,6 @@ function Tetris()
 	document.getElementById("tetris-menu-resume").onclick = function() { self.pause(); this.blur(); };
 
 	// help
-	// document.getElementById("tetris-menu-help").onclick = function() { highscores.close(); helpwindow.activate(); this.blur(); };
 	document.getElementById("tetris-help-close").onclick = helpwindow.close;
 
 	// highscores
