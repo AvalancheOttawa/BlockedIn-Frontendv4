@@ -13,6 +13,7 @@
 	<script	type="text/javascript" src="game_manager.js"></script>
 	<script	type="text/javascript" src="random_piece_generator.js"></script>
 	<script	type="text/javascript" src="stopwatch.js"></script>
+	<script	type="text/javascript" src="websocket.js"></script>
 
 	<style type="text/css">
 	html, body { height: 100%; }
@@ -50,7 +51,7 @@
 		transform: translate(-50%, -50%);
 		width: 90vmin;
 		height: 90vmin;
-		max-width: 600px;
+		max-width: 475px;
 		max-height: 620px;
 		background: rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(10px);
@@ -93,10 +94,11 @@
 		background: rgba(255, 255, 255, 0.2);
 	}
 	#tetris-nextpuzzle {
-		margin: 20px 0;
+		margin: 20px 0px;
 		height: 80px;
 		background: rgba(255, 255, 255, 0.05);
 		border-radius: 5px;
+		width: 100%;
 	}
 	.stats {
 		margin-top: auto;
@@ -136,54 +138,33 @@
 			<div id="tetris-nextpuzzle">
 				
 			</div>
-			<!-- <div id="tetris-gameover">Game Over</div> -->
-			<!-- <div id="tetris-keys">
-				<div class="h5">Keyboard:</div>
-				<table cellspacing="0" cellpadding="0">
-				<tr>
-					<td>Rotate:</td>
-					<td></td>
-					<td><img src="key-up.gif" width="14" height="14" alt=""></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Move:</td>
-					<td><img src="key-left.gif" width="14" height="14" alt=""></td>
-					<td><img src="key-down.gif" width="14" height="14" alt=""></td>
-					<td><img src="key-right.gif" width="14" height="14" alt=""></td>
-				</tr>
-				<tr>
-					<td>Fall:</td>
-					<td colspan="3">
-						<img src="key-space.gif" width="44" height="13" alt="">
-					</td>
-				</tr>
-				</table>
-			</div> -->
+
+			<div class="tetri-label">
+				<div class="redblock" style="display: inline-block; margin-right: 10px;">
+					<div style="width: 20px; height: 20px; background: #0096FF; display: inline-block;"></div>
+					<label>1</label>
+				</div>
+				<div class="blueblock" style="display: inline-block;">
+					<div style="width: 20px; height: 20px; background: #FF0000; display: inline-block;"></div>
+					<label>2</label>
+				</div>
+			</div>
+	
 			<div class="stats">
 				<div class="h5">Statistics:</div>
 				<table cellspacing="0" cellpadding="0">
 				<tr>
-					<td	class="level">Level:</td>
-					<td><span id="tetris-stats-level">1</span></td>
+					<td	class="level">Level:  <span id="tetris-stats-level">1</span></td>
 				</tr>
 				<tr>
-					<td	class="score">Score:</td>
-					<td><span id="tetris-stats-score">0</span></td>
+					<td	class="score">Score:  <span id="tetris-stats-score">0</span></td>
 				</tr>
 				<tr>
-					<td	class="lines">Lines:</td>
-					<td><span id="tetris-stats-lines">0</span></td>
+					<td	class="lines">Lines:  <span id="tetris-stats-lines">0</span></td>
 				</tr>
 				<tr>
-					<td	class="apm">APM:</td>
-					<td><span id="tetris-stats-apm">0</span></td>
+					<td	class="time">Time:  <span id="tetris-stats-time">0</span></td>
 				</tr>
-				<tr>
-					<td	class="time">Time:</td>
-					<td><span id="tetris-stats-time">0</span></td>
-				</tr>
-
 				</table>
 			</div>
 		</div>

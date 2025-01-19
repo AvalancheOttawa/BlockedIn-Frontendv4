@@ -7,7 +7,7 @@ body, table, input {
 	font-size: 11px;
 	line-height: 1.2em;
 	font-family: tahoma;
-	color: #1d0bc4;
+	color: #ffffff;
 }
 
 /* #tetris	{
@@ -114,10 +114,10 @@ body, table, input {
 	align-items: center;
 }
 
-#tetris-nextpuzzle {
+/* #tetris-nextpuzzle {
 	position: relative;
 	display:	absolute;
-	/* background:	#ffffff; */
+		background:	#ffffff;
 	background-color: rgba(255, 255, 255, 0.5);
 	overflow: visible;
 	display: none;
@@ -129,7 +129,7 @@ body, table, input {
 	background: rgba(255, 255, 255, 0.05);
 	border-radius: 5px;
 
-	}
+	} */
 	.stats {
 		margin-top: auto;
 	}
@@ -155,16 +155,22 @@ body, table, input {
 	left: 25px;
 	bottom:	5px;
 } */
-#tetris	.stats td {	padding-bottom:	1px; line-height: 1.25em; }
+#tetris	.stats td {	
+	display: block;
+	padding: 10px;
+	margin: 5px 0;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 5px;
+	text-decoration: none;
+	color: rgba(255, 255, 255, 0.8);
+	transition: background 0.3s;
+}
 
 #tetris	.stats .level {	text-align:	left; padding-right: 5px; }
 #tetris-stats-level	{ font-weight: bold; }
 
 #tetris	.stats .time { text-align: left; padding-right:	5px; }
 #tetris-stats-time { font-weight: bold;	}
-
-#tetris	.stats .apm	{ text-align: left;	padding-right: 5px;	}
-#tetris-stats-apm {	font-weight: bold; }
 
 #tetris	.stats .lines {	text-align:	left; padding-right: 5px; }
 #tetris-stats-lines	{ font-weight: bold; }
@@ -274,3 +280,4 @@ body, table, input {
 }
 #tetris	.window	.content table {
 }
+

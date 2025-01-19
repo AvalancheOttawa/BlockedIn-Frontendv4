@@ -509,7 +509,6 @@ function Tetris()
 	{
 		this.level;
 		this.time;
-		this.apm;
 		this.lines;
 		this.score;
 		this.puzzles; // number of puzzles created on current level
@@ -519,7 +518,6 @@ function Tetris()
 		this.el = {
 			"level": document.getElementById("tetris-stats-level"),
 			"time":  document.getElementById("tetris-stats-time"),
-			"apm":  document.getElementById("tetris-stats-apm"),
 			"lines": document.getElementById("tetris-stats-lines"),
 			"score": document.getElementById("tetris-stats-score")
 		}
@@ -560,14 +558,12 @@ function Tetris()
 			this.stop();
 			this.level = 1;
 			this.time  = 0;
-			this.apm   = 0;
 			this.lines = 0;
 			this.score = 0;
 			this.puzzles = 0;
 			this.actions = 0;
 			this.el.level.innerHTML = this.level;
 			this.el.time.innerHTML = this.time;
-			this.el.apm.innerHTML = this.apm;
 			this.el.lines.innerHTML = this.lines;
 			this.el.score.innerHTML = this.score;
 		};
@@ -582,8 +578,6 @@ function Tetris()
 		{
 			self.time++;
 			self.el.time.innerHTML = self.time;
-			self.apm = parseInt((self.actions / self.time) * 60);
-			self.el.apm.innerHTML = self.apm;
 		};
 
 		/**
