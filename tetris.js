@@ -296,20 +296,71 @@ function Tetris()
 
 	this.oneHandler = function() {
 		console.log("hello");
-		var childrenWithClass = this.area.el.querySelectorAll(".ghost-block choice1");
-
-		if (childrenWithClass.length > 0) {
-
-		}
-
+		console.log(self.area)
+		console.log(self.puzzle);
+		var childrenWithClass = self.area.el.querySelectorAll(".choice1");
 		childrenWithClass.forEach(function(child) {
-		    child.remove();  // Removes the child element from the DOM
+			console.log(child)
+			const array = child.className.split(" ");
+			child.className = array[array.length - 1];
+
+			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
+			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
+			console.log(child.style);
+			console.log(row, column)
+			self.area.board[row][column] = child;
 		});
+		console.log(self.puzzle);
+		self.puzzle.elements.forEach(function(element) {
+			element.remove();
+		})
+		self.puzzle.stopped = true;
+		var lines = self.puzzle.area.removeFullLines();
+		if (lines) {
+			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
+			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+		}
+		self.puzzle.reset();
+		if (self.puzzle.mayPlace()) {
+			self.puzzle.place();
+		} else {
+			self.puzzle.tetris.gameOver();
+		}
 		
 	}
 
 	this.twoHandler = function() {
 		console.log("hello2");
+		console.log("hello");
+		console.log(self.area)
+		var childrenWithClass = self.area.el.querySelectorAll(".choice2");
+		childrenWithClass.forEach(function(child) {
+			console.log(child)
+			const array = child.className.split(" ");
+			child.className = array[array.length - 1];
+
+			const row = parseInt(child.style.top.slice(0, child.style.top.length - 2) / 28);
+			const column = parseInt(child.style.left.slice(0, child.style.left.length - 2) / 28);
+			console.log(child.style);
+			console.log(row, column)
+			self.area.board[row][column] = child;
+		});
+		console.log(self.puzzle);
+		self.puzzle.elements.forEach(function(element) {
+			element.remove();
+		})
+		self.puzzle.stopped = true;
+		var lines = self.puzzle.area.removeFullLines();
+		if (lines) {
+			self.puzzle.tetris.stats.setLines(self.puzzle.tetris.stats.getLines() + lines);
+			self.puzzle.tetris.stats.setScore(self.puzzle.tetris.stats.getScore() + (1000 * self.puzzle.tetris.stats.getLevel() * lines));
+		}
+		self.puzzle.reset();
+		if (self.puzzle.mayPlace()) {
+			self.puzzle.place();
+		} else {
+			self.puzzle.tetris.gameOver();
+		}
 	}
 
 	// windows
@@ -1022,6 +1073,7 @@ function Tetris()
 					}
 				}
 			}
+			
 
 			this.running = true;
 			this.fallDownID = setTimeout(this.fallDown, this.speed);
@@ -1125,6 +1177,7 @@ function Tetris()
 		{
 			if (self.isRunning()) {
 				if (self.mayMoveDown()) {
+					console.log("go down")
 					self.moveDown();
 					self.fallDownID = setTimeout(self.fallDown, self.speed);
 				} else {
