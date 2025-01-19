@@ -49,13 +49,11 @@ setInterval(function() {
 	ws.send(JSON.stringify({ "endpoint": "sendLineGrowth", "message": linesPerMin}));
 }, 50000);
 
-setInterval(function() {
-	ws.send(JSON.stringify({ "endpoint": "getFocus", "message": ""}));
-	// console.log(output);
-	// const jsonOutput = JSON.parse(output);
-	// if (jsonOutput.focus <= 45) {
-	// 	WebSocketData.startCountdown(30);
-	// } else if (jsonOutput.focus <= 70) {
-	// 	WebSocketData.startCountdown(15);
-	// }
-}, 2000);
+setTimeout(function() {
+    ws.send(JSON.stringify({ "endpoint": "getFocus", "message": "" }));
+    
+    // Start the interval after the timeout completes
+    setInterval(function() {
+        ws.send(JSON.stringify({ "endpoint": "getFocus", "message": "" }));
+    }, 3000);
+}, 10000);

@@ -370,6 +370,11 @@ function Tetris()
 		}
 	}
 
+	this.activateFocusMode = function() {
+		WebSocketData.startCountdown(20);
+		focusModeDiv.style.display = 'block';
+	}
+
 	// this.threeHandler = function() {
 	// 	console.log("hello3");
 	// 	console.log("hello");
@@ -457,6 +462,7 @@ function Tetris()
 	keyboard.set(keyboard.one, this.oneHandler);
 	keyboard.set(keyboard.two, this.twoHandler);
 	keyboard.set(keyboard.three, this.threeHandler);
+	keyboard.set(keyboard.f, this.activateFocusMode);
 
 	document.onkeydown = keyboard.event;
 
@@ -519,6 +525,7 @@ function Tetris()
 		this.one = 49;
 		this.two = 50;
 		this.three = 51;
+		this.f = 70; 
 
 		this.keys = [];
 		this.funcs = [];
