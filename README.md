@@ -1,9 +1,12 @@
 # Automated Tetris: Enhancing Focus and Accountability Through AI
 
 Welcome to Automated Tetris, a unique spin on the classic game that combines cutting-edge AI with interactive gameplay. This project explores semi-automation to engage users, promote accountability, and enhance focus using innovative AI-powered techniques.
-🚀 Project Overview
+Link to backend [BlockedIn-Backend](https://github.com/AvalancheOttawa/BlockedIn-Backend)
 
-## Automated Tetris introduces a semi-automated model to gameplay:
+
+## 🚀 Project Overview
+
+ Automated Tetris introduces a semi-automated model to gameplay:
 
     The AI provides two placement options for each falling piece:
         Optimal Placement: The best possible move.
